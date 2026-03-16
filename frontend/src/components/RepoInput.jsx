@@ -3,11 +3,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { repoSchema } from "../vaidations/repoSchema"
 import { apiClient } from "../services/apiClient"
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card } from "@/components/ui/card"
-
 export default function RepoInput() {
+
   const {
     register,
     handleSubmit,
@@ -17,35 +14,42 @@ export default function RepoInput() {
   })
 
   const onSubmit = async (data) => {
-    await apiClient.post("/index", data)
-    alert("Repository indexed successfully")
+    try {
+      await apiClient.post("/index", data)
+      alert("Repository indexed successfully")
+    } catch (err) {
+      console.error(err)
+      alert("Indexing failed")
+    }
   }
 
   return (
-    <Card className="p-6 space-y-4">
-      <h2 className="text-lg font-semibold">
-        Index GitHub Repository
-      </h2>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      
+      <div className="max-w-4xl mx-auto flex gap-3">
 
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex gap-3"
-      >
-        <Input
-          placeholder="https://github.com/user/repo"
+        <input
           {...register("repoUrl")}
+          placeholder="https://github.com/user/repo"
+          className="flex-1 border rounded-md px-4 py-2"
         />
 
-        <Button disabled={isSubmitting}>
-          {isSubmitting ? "Indexing..." : "Index Repository"}
-        </Button>
-      </form>
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="bg-black text-white px-4 rounded-md"
+        >
+          {isSubmitting ? "Indexing..." : "Add Repository"}
+        </button>
+
+      </div>
 
       {errors.repoUrl && (
-        <p className="text-red-500 text-sm">
+        <p className="text-red-500 text-sm mt-2">
           {errors.repoUrl.message}
         </p>
       )}
-    </Card>
+
+    </form>
   )
 }

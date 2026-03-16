@@ -13,9 +13,7 @@ export default function ChatPage() {
       { role: "user", content: question },
     ])
 
-    const res = await apiClient.post("/ask", {
-      question,
-    })
+    const res = await apiClient.post("/ask", { question })
 
     setMessages((prev) => [
       ...prev,
@@ -24,14 +22,28 @@ export default function ChatPage() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-6">
-        AI Codebase Assistant
-      </h1>
+    <div className="h-screen flex flex-col bg-gray-50">
 
-      <RepoInput />
+      {/* Header */}
+      <header className="border-b bg-white px-8 py-4">
+        <h1 className="text-xl font-semibold">
+          AI Codebase Assistant
+        </h1>
+      </header>
 
-      <div className="space-y-4 border p-4 rounded h-[400px] overflow-y-auto">
+      {/* Repo Input */}
+      <div className="px-8 py-4 bg-white border-b">
+        <RepoInput />
+      </div>
+
+      {/* Chat Area */}
+      <div className="flex-1 overflow-y-auto px-8 py-6 space-y-6">
+        {messages.length === 0 && (
+          <div className="text-gray-400 text-center mt-20">
+            Ask a question about the repository
+          </div>
+        )}
+
         {messages.map((m, i) => (
           <ChatMessage
             key={i}
@@ -41,7 +53,11 @@ export default function ChatPage() {
         ))}
       </div>
 
-      <ChatInput onSend={askQuestion} />
+      {/* Input */}
+      <div className="border-t bg-white px-8 py-4">
+        <ChatInput onSend={askQuestion} />
+      </div>
+
     </div>
   )
 }

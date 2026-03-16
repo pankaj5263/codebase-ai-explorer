@@ -1,10 +1,18 @@
-import UserMessage from "./UserMessage"
-import AIMessage from "./AIMessage"
-
 export default function ChatMessage({ role, content }) {
-  if (role === "user") {
-    return <UserMessage message={content} />
-  }
+  const isUser = role === "user"
 
-  return <AIMessage message={content} />
+  return (
+    <div className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
+      <div
+        className={`max-w-2xl rounded-lg px-4 py-3 text-sm leading-relaxed
+        ${
+          isUser
+            ? "bg-black text-white"
+            : "bg-white border"
+        }`}
+      >
+        {content}
+      </div>
+    </div>
+  )
 }
