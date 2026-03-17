@@ -12,3 +12,11 @@
 body {
   @apply bg-white text-black;
 }
+
+.prose pre {
+  @apply bg-black text-white p-4 rounded-lg overflow-x-auto;
+}
+
+.prose code {
+  @apply text-sm;
+}

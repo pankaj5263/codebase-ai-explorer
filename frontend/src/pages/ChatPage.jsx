@@ -17,7 +17,7 @@ export default function ChatPage() {
 
     setMessages((prev) => [
       ...prev,
-      { role: "ai", content: res.data.answer },
+      { role: "ai", content: res?.data?.answer || "No response" },
     ])
   }
 
