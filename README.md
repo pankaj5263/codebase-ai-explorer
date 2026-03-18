@@ -50,3 +50,8 @@ Vector DB
 AI Reasoning
 ↓
 Answer
+
+
+
+<img width="1848" height="1088" alt="image" src="https://github.com/user-attachments/assets/f31e93fe-b20b-4931-bd1c-c018502aaa83" />
+
